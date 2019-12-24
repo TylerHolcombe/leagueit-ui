@@ -16,11 +16,11 @@ export class LoginService {
   /** POST: get an identity token for the user **/
   login(request: LoginRequest): Observable<HttpResponse<LoginResponse>> {
     return this.http.post(this.loginServiceUrl, request)
-    .pipe(map((response: HttpResponse<LoginResponse>) => {
-      if (response.ok) {
-        localStorage.setItem('currentToken', response.body.token);
-        localStorage.setItem('currentUser', response.body.username);
-        localStorage.setItem('tokenExpires', response.body.expiration.toString());
+    .pipe(map((response: LoginResponse | HttpResponse<LoginResponse>) => {
+      if (!response.status) {
+        localStorage.setItem('currentToken', response.token);
+        localStorage.setItem('currentUser', response.username);
+        localStorage.setItem('tokenExpires', response.expiration.toString());
       }
       return response;
     }), catchError((error) => {
@@ -42,6 +42,26 @@ export class LoginService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('tokenExpires');
   }
+
+  isAuthenticated(): boolean {
+    console.log(localStorage.getItem('tokenExpires'));
+    console.log(this.tokenTtl());
+    return localStorage.getItem('currentToken') && localStorage.getItem('currentUser') && !this.isTokenExpired();
+  }
+
+  isTokenExpired(): boolean {
+    return this.tokenTtl() <= 0;
+  }
+
+  tokenTtl(): number {
+    let expiresString: string = localStorage.getItem('tokenExpires');
+    if(!expiresString) {
+      return 0;
+    }
+    let expires: number = (new Date(expiresString)).getTime();
+    let current: number = (new Date()).getTime();
+    return expires - current;
+  }
 }
 
 export class LoginRequest {
@@ -52,4 +72,5 @@ export class LoginRequest {
 export class LoginResponse {
   username: string;
   expiration: Date;
+  token: string;
 }
