@@ -1,5 +1,6 @@
 import { Component, OnInit }from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { LoginService, LoginRequest, LoginResponse } from './login.service';
@@ -34,13 +35,14 @@ export class LoginComponent implements OnInit {
   }
 
   loginSubmit(): void {
+    this.loginModel.clear();
     if (this.credentialsForm.valid) {
       let request: LoginRequest = new LoginRequest();
       request.username = this.username.value;
       request.password = this.password.value;
       this.loginService.login(request).subscribe(
-        (response) => {
-          if(!response.statusText) {
+        (response: HttpResponse<LoginResponse>) => {
+          if(response.ok) {
             this.router.navigate(['/home']);
           }
           else {
@@ -61,4 +63,9 @@ export class LoginComponent implements OnInit {
 class LoginModel {
   errorCode?: number;
   errorMessage?: string;
+
+  clear(): void {
+    this.errorCode = null;
+    this.errorMessage = null;
+  }
 }

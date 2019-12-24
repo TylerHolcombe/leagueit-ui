@@ -16,13 +16,13 @@ export class LoginService {
   /** POST: get an identity token for the user **/
   login(request: LoginRequest): Observable<HttpResponse<LoginResponse>> {
     return this.http.post(this.loginServiceUrl, request)
-    .pipe(map((response: LoginResponse | HttpResponse<LoginResponse>) => {
-      if (!response.status) {
+    .pipe(map((response: LoginResponse) => {
+      if (response) {
         localStorage.setItem('currentToken', response.token);
         localStorage.setItem('currentUser', response.username);
         localStorage.setItem('tokenExpires', response.expiration.toString());
       }
-      return response;
+      return new HttpResponse<LoginResponse>({body: response, status: 200});
     }), catchError((error) => {
       let errorMessage = 'Something went wrong! This may be temporary, please try again later.';
       let errorCode = 500;
@@ -44,8 +44,6 @@ export class LoginService {
   }
 
   isAuthenticated(): boolean {
-    console.log(localStorage.getItem('tokenExpires'));
-    console.log(this.tokenTtl());
     return localStorage.getItem('currentToken') && localStorage.getItem('currentUser') && !this.isTokenExpired();
   }
 
