@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { environment } from '../../environments/environment';
 import { LoginService, LoginRequest, LoginResponse } from './login.service';
 
 @Component({
@@ -11,13 +12,14 @@ templateUrl: './login.component.html',
 styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private maxUsernameLength: number = 30;
-  private maxPasswordLength: number = 30;
+  private maxUsernameLength: number = environment.maxUsernameLength;
+  private maxPasswordLength: number = environment.maxPasswordLength;
+  private usernameRegex: string = environment.usernameRegex;
 
   loginModel: LoginModel = new LoginModel();
 
   credentialsForm = new FormGroup({
-    'username': new FormControl('', [Validators.required, Validators.maxLength(this.maxUsernameLength)]),
+    'username': new FormControl('', [Validators.required, Validators.maxLength(this.maxUsernameLength), Validators.pattern(this.usernameRegex)]),
     'password': new FormControl('', [Validators.required, Validators.maxLength(this.maxPasswordLength)])
   });
 
