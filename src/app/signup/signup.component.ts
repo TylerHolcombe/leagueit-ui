@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { SignupService } from './signup.service';
+import { SignupService, SignupRequest, SignupResponse } from './signup.service';
 
 @Component({
   selector: 'app-signup',
@@ -44,18 +45,32 @@ export class SignupComponent implements OnInit {
 
   signupSubmit(): void {
     this.signupModel.clear();
-
-    // TODO: implement signup service and call here
-    console.log("signup submitted!");
+    if(this.signupForm.valid) {
+      let request: SignupRequest = new SignupRequest();
+      request.username = this.username.value;
+      request.password = this.password.value;
+      this.signupService.signup(request).subscribe((response: HttpResponse<SignupResponse>) => {
+        if(response.ok) {
+          this.router.navigate(['/login']);
+        }
+        else {
+          this.signupModel.errorMessage = response.statusText;
+        }
+      });
+    }
+    else {
+      for(let key in this.signupForm.controls) {
+        this.signupForm.get(key).markAsTouched({onlySelf: false});
+        this.signupForm.get(key).markAsDirty({onlySelf: false});
+      }
+    }
   }
 }
 
 class SignupModel {
-  errorCode?: number;
   errorMessage?: string;
 
   clear(): void {
-    this.errorCode = null;
     this.errorMessage = null;
   }
 }

@@ -63,11 +63,9 @@ export class LoginComponent implements OnInit {
 }
 
 class LoginModel {
-  errorCode?: number;
   errorMessage?: string;
 
   clear(): void {
-    this.errorCode = null;
     this.errorMessage = null;
   }
 }
