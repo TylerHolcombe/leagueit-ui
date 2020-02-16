@@ -66,7 +66,6 @@ export class LoginRequest {
   username: string;
   password: string;
 }
-
 export class LoginResponse {
   username: string;
   expiration: Date;

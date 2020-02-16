@@ -7,8 +7,10 @@
     <h4>Your Leagues</h4>
     <div *ngFor="let league of homeModel.leagues">
       <div class="card bg-info my-3">
+        <div class="card-header">
+          {{league.leagueName}}
+        </div>
         <div class="card-body">
-          <h5 class="card-title">{{league.leagueName}}</h5>
           <p card-text>
             {{league.leagueDescription}}
           </p>
@@ -23,6 +25,3 @@
     </div>
   </div>
 </div>
-
-<!-- TODO: temp. Remove when implementing actual home ui -->
-<button type="button" class="btn btn-danger w-100" (click)="onClick()">Logout</button>

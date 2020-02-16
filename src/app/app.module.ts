@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { LeagueComponent } from './leagues/league/league.component';
 import { CreateLeagueComponent } from './leagues/create-league/create-league.component';
+import { httpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { CreateLeagueComponent } from './leagues/create-league/create-league.com
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

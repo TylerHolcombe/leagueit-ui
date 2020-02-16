@@ -15,10 +15,11 @@ export class LeagueComponent implements OnInit {
 }
 
 export class League {
-	ownerUsername: string;
-	leagueName: string;
-	leagueDescription: string;
-	teamSize: number;
-	ratingStrategy: string;
-	numPlayers: number;
+  leagueId: string;
+  leagueName: string;
+  leagueDescription: string;
+  teamSize: number;
+  ratingStrategy: string;
+  ownerUsername: string;
+  numPlayers: number;
 }
