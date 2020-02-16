@@ -9,13 +9,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
+import { LeaguesComponent } from './leagues/leagues.component';
+import { LeagueComponent } from './leagues/league/league.component';
+import { CreateLeagueComponent } from './leagues/create-league/create-league.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    LeaguesComponent,
+    LeagueComponent,
+    CreateLeagueComponent
   ],
   imports: [
     BrowserModule,

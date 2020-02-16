@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginSubmit(): void {
-    this.loginModel.clear();
+    this.loginModel.clearErrors();
     if (this.credentialsForm.valid) {
       let request: LoginRequest = new LoginRequest();
       request.username = this.username.value;
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
 class LoginModel {
   errorMessage?: string;
 
-  clear(): void {
+  clearErrors(): void {
     this.errorMessage = null;
   }
 }

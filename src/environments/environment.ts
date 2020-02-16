@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  leagueitServiceUrl: 'http://localhost:8080',
+  leagueitServiceUrl: 'http://192.168.1.137:8080',
   maxPasswordLength: 255,
   maxUsernameLength: 255,
   usernameRegex: "[A-Za-z1-9_\.]+",

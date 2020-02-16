@@ -27,9 +27,9 @@ export class LoginService {
       let errorMessage = 'Something went wrong! This may be temporary, please try again later.';
       let errorCode = 500;
       if(error) {
+        errorCode = error.status;
         // HTTP Forbidden: invalid credentials supplied
-        if(error.status === 403) {
-          errorCode = 403;
+        if(errorCode === 403) {
           errorMessage = 'Username and password combination not found.'
         }
       }

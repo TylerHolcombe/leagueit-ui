@@ -12,8 +12,8 @@ import { SignupService, SignupRequest, SignupResponse } from './signup.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  private maxUsernameLength: number = 255;
-  private maxPasswordLength: number = 255;
+  private maxUsernameLength: number = environment.maxUsernameLength;
+  private maxPasswordLength: number = environment.maxPasswordLength;
   private usernameRegex: string = environment.usernameRegex;
 
   signupModel: SignupModel = new SignupModel();
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
   }
 
   signupSubmit(): void {
-    this.signupModel.clear();
+    this.signupModel.clearErrors();
     if(this.signupForm.valid) {
       let request: SignupRequest = new SignupRequest();
       request.username = this.username.value;
@@ -70,7 +70,7 @@ export class SignupComponent implements OnInit {
 class SignupModel {
   errorMessage?: string;
 
-  clear(): void {
+  clearErrors(): void {
     this.errorMessage = null;
   }
 }

@@ -1,4 +1,28 @@
-<p>home works!</p>
+<div class="container my-3 border rounded py-3">
+  <div class="container bg-dark text-white my-3 border rounded py-3">
+    <h3 class="display-5">Welcome, {{homeModel.username}}!</h3>
+  </div>
+
+  <div class="container bg-dark text-white my-3 border rounded py-3">
+    <h4>Your Leagues</h4>
+    <div *ngFor="let league of homeModel.leagues">
+      <div class="card bg-info my-3">
+        <div class="card-body">
+          <h5 class="card-title">{{league.leagueName}}</h5>
+          <p card-text>
+            {{league.leagueDescription}}
+          </p>
+          <p class="card-text">
+            Number of players: {{league.numPlayers}}
+          </p>
+          <p class="card-text">
+            Team size: {{league.teamSize}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- TODO: temp. Remove when implementing actual home ui -->
 <button type="button" class="btn btn-danger w-100" (click)="onClick()">Logout</button>
