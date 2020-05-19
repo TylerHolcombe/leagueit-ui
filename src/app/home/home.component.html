@@ -4,22 +4,31 @@
   </div>
 
   <div class="container bg-dark text-white my-3 border rounded py-3">
-    <h4>Your Leagues</h4>
-    <div *ngFor="let league of homeModel.leagues">
-      <div class="card bg-info my-3">
-        <div class="card-header">
-          {{league.leagueName}}
-        </div>
-        <div class="card-body">
-          <p card-text>
-            {{league.leagueDescription}}
-          </p>
-          <p class="card-text">
-            Number of players: {{league.numPlayers}}
-          </p>
-          <p class="card-text">
-            Team size: {{league.teamSize}}
-          </p>
+    <div class="row">
+      <div class="col text-left">
+        <h4>Your Leagues</h4>
+      </div>
+      <div class="col text-right">
+        <a routerLink="/leagues/new"><button type="button" class="btn btn-secondary" name="new-league">+</button></a>
+      </div>
+    </div>
+    <div class="row" *ngFor="let league of homeModel.leagues">
+      <div class="col">
+        <div class="card bg-info my-3">
+          <div class="card-header">
+            {{league.leagueName}}
+          </div>
+          <div class="card-body">
+            <p card-text>
+              {{league.leagueDescription}}
+            </p>
+            <p class="card-text">
+              Number of players: {{league.numPlayers}}
+            </p>
+            <p class="card-text">
+              Team size: {{league.teamSize}}
+            </p>
+          </div>
         </div>
       </div>
     </div>
