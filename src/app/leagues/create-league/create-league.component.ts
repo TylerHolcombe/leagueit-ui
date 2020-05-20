@@ -36,11 +36,25 @@ export class CreateLeagueComponent implements OnInit {
     return this.newLeagueForm.get('team-size');
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  newLeagueSubmit(): void {
+    this.newLeagueModel.clearErrors();
+    if(this.newLeagueForm.valid) {
+      // TODO: submit to service and handle errors. On success navigate home.
+      console.log("Submitted");
+      this.router.navigate(['/home']);
+    }
+    else {
+      for(let key in this.newLeagueForm.controls) {
+        this.newLeagueForm.get(key).markAsTouched({onlySelf: false});
+        this.newLeagueForm.get(key).markAsDirty({onlySelf: false});
+      }
+    }
+  }
 }
 
 class NewLeagueModel {
