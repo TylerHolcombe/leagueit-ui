@@ -10,19 +10,20 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./create-league.component.css']
 })
 export class CreateLeagueComponent implements OnInit {
-  // TODO implement max lengths for free text fields
-  private maxLeagueNameLength: number = environment.maxUsernameLength;
-  private leagueNameRegex: string = environment.usernameRegex;
-  private maxLeagueDescriptionLength: number = 500;
+  private maxLeagueNameLength: number = environment.maxLeagueNameLength;
+  private leagueNameRegex: string = environment.leagueNameRegex;
+  private maxLeagueDescriptionLength: number = environment.maxLeagueDescriptionLength;
+
+  ratingStrategyList: string[] = environment.ratingStrategies;
 
   newLeagueModel: NewLeagueModel = new NewLeagueModel();
 
   newLeagueForm = new FormGroup({
     'name': new FormControl('', [Validators.required, Validators.maxLength(this.maxLeagueNameLength), Validators.pattern(this.leagueNameRegex)]),
-    'description': new FormControl('', [Validators.required, Validators.maxLength(this.maxLeagueDescriptionLength)]),
+    'description': new FormControl('', [Validators.maxLength(this.maxLeagueDescriptionLength)]),
     'team-size': new FormControl('', [Validators.required]),
-  },
-  );
+    'rating-strategy': new FormControl('', [Validators.required]),
+  });
 
   get name() {
     return this.newLeagueForm.get('name');
@@ -36,6 +37,10 @@ export class CreateLeagueComponent implements OnInit {
     return this.newLeagueForm.get('team-size');
   }
 
+  get ratingStrategy() {
+    return this.newLeagueForm.get('rating-strategy');
+  }
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -45,7 +50,6 @@ export class CreateLeagueComponent implements OnInit {
     this.newLeagueModel.clearErrors();
     if(this.newLeagueForm.valid) {
       // TODO: submit to service and handle errors. On success navigate home.
-      console.log("Submitted");
       this.router.navigate(['/home']);
     }
     else {

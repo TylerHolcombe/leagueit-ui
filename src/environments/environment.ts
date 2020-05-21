@@ -5,9 +5,17 @@
 export const environment = {
   production: false,
   leagueitServiceUrl: 'http://localhost:8080',
+
+  // Signup Form
   maxPasswordLength: 255,
   maxUsernameLength: 255,
   usernameRegex: "[A-Za-z1-9_\.]+",
+
+  // Create League Form
+  maxLeagueNameLength: 255,
+  leagueNameRegex: "[A-Za-z1-9_\.]+",
+  maxLeagueDescriptionLength: 1000,
+  ratingStrategies: ['Scaling Elo'],
 };
 
 /*

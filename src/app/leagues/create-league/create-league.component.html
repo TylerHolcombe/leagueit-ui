@@ -10,7 +10,14 @@
     </div>
     <div class="form-group">
       <input type="number" class="form-control" formControlName="team-size" placeholder="Team Size">
-      <!-- TODO add radio button for rating strategy -->
+    </div>
+    <div class="form-group">
+      <label for="rating-strategy-div">Rating Strategy</label>
+      <div name="rating-strategy-div" class="btn-group w-100" btnRadioGroup formControlName="rating-strategy">
+        <div *ngFor="let strategy of ratingStrategyList">
+          <label btnRadio="{{strategy}}" class="btn btn-primary" tabindex="0" role="button">{{strategy}}</label>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary w-100 mt-3">Create League</button>
