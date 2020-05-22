@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
+import { LeagueService } from '../league.service';
+import { League } from '../league/league.component';
 
 @Component({
   selector: 'app-create-league',
@@ -10,20 +13,22 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./create-league.component.css']
 })
 export class CreateLeagueComponent implements OnInit {
-  private maxLeagueNameLength: number = environment.maxLeagueNameLength;
+  maxLeagueNameLength: number = environment.maxLeagueNameLength;
   private leagueNameRegex: string = environment.leagueNameRegex;
-  private maxLeagueDescriptionLength: number = environment.maxLeagueDescriptionLength;
+  maxLeagueDescriptionLength: number = environment.maxLeagueDescriptionLength;
 
-  ratingStrategyList: string[] = environment.ratingStrategies;
+  ratingStrategyList: any[] = environment.ratingStrategies;
 
   newLeagueModel: NewLeagueModel = new NewLeagueModel();
 
   newLeagueForm = new FormGroup({
     'name': new FormControl('', [Validators.required, Validators.maxLength(this.maxLeagueNameLength), Validators.pattern(this.leagueNameRegex)]),
     'description': new FormControl('', [Validators.maxLength(this.maxLeagueDescriptionLength)]),
-    'team-size': new FormControl('', [Validators.required]),
-    'rating-strategy': new FormControl('', [Validators.required]),
-  });
+    'teamSize': new FormControl('', [Validators.required]),
+    'ratingStrategy': new FormControl('', [Validators.required]),
+  },
+  {}
+  );
 
   get name() {
     return this.newLeagueForm.get('name');
@@ -34,14 +39,14 @@ export class CreateLeagueComponent implements OnInit {
   }
 
   get teamSize() {
-    return this.newLeagueForm.get('team-size');
+    return this.newLeagueForm.get('teamSize');
   }
 
   get ratingStrategy() {
-    return this.newLeagueForm.get('rating-strategy');
+    return this.newLeagueForm.get('ratingStrategy');
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private leagueService: LeagueService) { }
 
   ngOnInit() {
   }
@@ -49,8 +54,15 @@ export class CreateLeagueComponent implements OnInit {
   newLeagueSubmit(): void {
     this.newLeagueModel.clearErrors();
     if(this.newLeagueForm.valid) {
-      // TODO: submit to service and handle errors. On success navigate home.
-      this.router.navigate(['/home']);
+      let league: League = new League(this.name.value, this.description.value, this.teamSize.value, this.ratingStrategy.value);
+      this.leagueService.createLeague(league).subscribe((response: HttpResponse<League>) => {
+        if(response.ok) {
+          this.router.navigate(['/home']);
+        }
+        else {
+          this.newLeagueModel.errorMessage = response.statusText;
+        }
+      });
     }
     else {
       for(let key in this.newLeagueForm.controls) {

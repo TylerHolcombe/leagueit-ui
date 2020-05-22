@@ -1,6 +1,5 @@
 <div class="container bg-dark text-white my-3 border rounded py-3">
-  <div *ngIf="signupModel.errorMessage" class="container bg-danger mb-3 border rounded">{{signupModel.errorMessage}}
-  </div>
+  <div *ngIf="signupModel.errorMessage" class="container bg-danger mb-3 border rounded">{{signupModel.errorMessage}}</div>
   <form [formGroup]="signupForm" (submit)="signupSubmit()">
     <div class="form-group">
       <div *ngIf="username.invalid && (username.dirty || username.touched)">

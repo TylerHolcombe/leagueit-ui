@@ -31,6 +31,21 @@ export class LeagueService {
       return of(new HttpResponse<GetLeaguesResponse>({statusText: errorMessage, status: errorCode}));
     }));
   }
+
+  /** POST: Create a new league owned by the currently logged in user **/
+  createLeague(request: League): Observable<HttpResponse<League>> {
+    return this.http.post(this.leagueServiceUrl, request)
+    .pipe(map((response: League) => {
+      return new HttpResponse<League>({body: response, status: 200});
+    }), catchError((error) => {
+      let errorMessage = 'Something went wrong! This may be temporary, please try again later.';
+      let errorCode = 500;
+      if(error) {
+        errorCode = error.status;
+      }
+      return of(new HttpResponse<League>({statusText: errorMessage, status: errorCode}));
+    }));
+  }
 }
 
 export class GetLeaguesRequest {

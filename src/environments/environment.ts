@@ -15,7 +15,13 @@ export const environment = {
   maxLeagueNameLength: 255,
   leagueNameRegex: "[A-Za-z1-9_\.]+",
   maxLeagueDescriptionLength: 1000,
-  ratingStrategies: ['Scaling Elo'],
+  ratingStrategies: [
+    {
+      name: "Group Elo",
+      value: "GROUP_ELO",
+      description: "Similar to the 1 vs 1 elo system, but with skill difference calculated using the team averages."
+    }
+  ],
 };
 
 /*

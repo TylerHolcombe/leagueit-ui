@@ -20,6 +20,14 @@ export class League {
   leagueDescription: string;
   teamSize: number;
   ratingStrategy: string;
+  ownerId: number;
   ownerUsername: string;
   numPlayers: number;
+
+  constructor(leagueName: string, leagueDescription: string, teamSize: number, ratingStrategy: string) {
+    this.leagueName = leagueName;
+    this.leagueDescription = leagueDescription;
+    this.teamSize = teamSize;
+    this.ratingStrategy = ratingStrategy;
+  }
 }
